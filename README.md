@@ -15,7 +15,7 @@ devtools::install_github("SangkyuStat/plmR")
 
 ### Usage Examples
 
-#### `pltf` and `plqrtf` function 
+#### (1) `pltf` and `plqrtf` function 
 `pltf` function provides partial linear trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function.
 
 `plqrtf` function provides partial linear quantile trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default.
@@ -35,7 +35,7 @@ vc.pb(formula = response ~ variable +
                 group = disparity_group, 
                 modifier = "any modifier")
 ```-->
-#### `plss` and `plqrss` function 
+#### (2) `plss` and `plqrss` function 
 `plss` function provides partial linear smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon.
 
 `plqrss` function provides partial linear quantile smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default.
@@ -53,11 +53,13 @@ plqrss(y = response, x = design matrix, z = covariate, tau = 0.5)
 - The cross-validation function for choosing the tuning parameters will be updated soon.
 - We are trying to develop other methods as well.
 
-%### References
+<!--
+### References
 
-%Peters, C. C. (1941) A method of matching groups for experiment with no loss of population. Journal of Educational Research, 34, 606-612.
+Peters, C. C. (1941) A method of matching groups for experiment with no loss of population. Journal of Educational Research, 34, 606-612.
 
-%Belson, W. A. (1956) A Technique for Studying the Effects of a Television 
+Belson, W. A. (1956) A Technique for Studying the Effects of a Television 
 Broadcast.  JRSSC, 5(3), 195-202.
 
-%Lee, S. K., Kim, S., Kim, M.-O., Grantz, K. L., and Hong, H. G. (2024) Decomposition of Longitudinal Disparities: An Application to the Fetal Growth-Singletons Study. *submitted*.
+Lee, S. K., Kim, S., Kim, M.-O., Grantz, K. L., and Hong, H. G. (2024) Decomposition of Longitudinal Disparities: An Application to the Fetal Growth-Singletons Study. *submitted*.
+```-->
