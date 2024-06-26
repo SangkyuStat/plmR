@@ -2,9 +2,7 @@
 
 This R package, plmR, implements a high-dimensional partial linear model as well as a high-dimensional partial linear quantile regression model using LASSO and Quantile LASSO. 
  
-Our method serves as a dynamic alternative to the traditional Peters-Belson (PB) decomposition approach. It addresses both the potential reduction in disparities if minority groups' covariate distributions were aligned with those of the majority, and the changing nature of disparities over time.
-
-Our package also provides the longitudinal PB model without the modifier and original PB model as well.
+Our package utilize **trend filtering** and **smoothing spline** for the nonparametric term, and is also adapted to the quantile regression with these two methods. Our model can be simply reduced to the models without the penalties, by letting penalty to be 0. For both methods, `lambda1` is a penalty related to LASSO and `lambda2` is a penalty related to the nonparametric term.
 
 ### Installation
 
