@@ -1,6 +1,6 @@
 # plmR: Partial Linear Model for High-Dimensional Data Analysis
 
-[![R-CMD-check](https://github.com/SangkyuStat/plmR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SangkyuStat/plmR/actions/workflows/R-CMD-check.yaml)
+<!--[![R-CMD-check](https://github.com/SangkyuStat/plmR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SangkyuStat/plmR/actions/workflows/R-CMD-check.yaml)```-->
 
 This R package, plmR, implements a high-dimensional partial linear model as well as a high-dimensional partial linear quantile regression model using LASSO and Quantile LASSO. 
  
