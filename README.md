@@ -2,7 +2,9 @@
 
 This R package, plmR, implements a high-dimensional partial linear model as well as a high-dimensional partial linear quantile regression model using LASSO and Quantile LASSO. 
  
-Our package utilize **trend filtering** and **smoothing spline** for the nonparametric term, and is also adapted to the quantile regression with these two methods. Our model can be simply reduced to the models without the penalties, by letting penalty to be 0. For both methods, `lambda1` is a penalty related to LASSO and `lambda2` is a penalty related to the nonparametric term.
+Our package utilize **trend filtering** and **smoothing spline** for the nonparametric term, and is also adapted to the partial linear quantile regression with these two methods. Our model can be simply reduced to the models without the penalties, by letting penalty to be 0. For both methods, `lambda1` is a penalty related to LASSO and `lambda2` is a penalty related to the nonparametric term.
+
+All of our functions are built on Block-wise Coordinate Descent algorithm (Backfitting algorithm). However, `plqrtf` and `plqrss` are designed with one more nested loop for approximation, therefore, it has to be used with care because of the time consumption. 
 
 ### Installation
 
@@ -13,43 +15,17 @@ devtools::install_github("SangkyuStat/plmR")
 
 ### Usage Examples
 
-#### - `vc.pb` function 
-`vc.pb` function provides three different types of models based on the different input arguments: `modifier` and time varying coefficients. 
+#### `pltf` and `plqrtf` function 
+`pltf` function provides partial linear trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function.
 
-If `modifier` is `NULL` (the default setting is `NULL`) and at least a time-varying variable exists, then the simple varying-coefficient Peters-Belson method using a gaussian kernel regression can be performed as below:
+`plqrtf` function provides partial linear quantile trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default.
+
 ```R
-vc.pb(formula = response ~ (time varying variable | time variable) + 
-                variable, 
-                id,
-                data = input_data, 
-                group = disparity_group)
+pltf(y = response, x = design matrix, z = covariate, k = order)
+
+plqrtf(y = response, x = design matrix, z = covariate, k = order, tau = 0.5)
 ```
-If `modifier` is not `NULL` and is a discrete variable, and at least a time-varying variable exists, then the modifiable varying-coefficient Peters-Belson method using a gaussian kernel regression can be performed as below:
-```R
-vc.pb(formula = response ~ (time varying variable | time variable) + 
-                variable + discrete modifier, 
-                id,
-                data = input_data, 
-                group = disparity_group, 
-                modifier = "discrete modifier")
-```
-If `modifier` is not `NULL` and is a continuous variable, and at least a time-varying variable exists, then the simple varying-coefficient Peters-Belson method using a gaussian kernel regression can be performed as below:
-```R
-vc.pb(formula = response ~ (time varying variable | time variable) + 
-                variable + continuous modifier, 
-                id,
-                data = input_data, 
-                group = disparity_group, 
-                modifier = "continuous modifier")
-```
-The type of modifier returns the different results. If there are more than one time-varying variables, the user can perform the function as below:
-```R
-vc.pb(formula = response ~ (time varying variable1 | time variable) + 
-                (time varying variable2 | time variable) + other variable,
-                id,
-                data = input_data, 
-                group = disparity_group)
-```
+
 <!--the user has to indicate whether the variable is time-varying or not. If there is no time-varying variable, then user can perform the function as below:
 ```R
 vc.pb(formula = response ~ variable + 
@@ -59,30 +35,29 @@ vc.pb(formula = response ~ variable +
                 group = disparity_group, 
                 modifier = "any modifier")
 ```-->
-If there is no modifier and time-varying variable, then the model is just the naive PB model. For this case, the user can use `pb` function instead.
+#### `plss` and `plqrss` function 
+`plss` function provides partial linear smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon.
 
-The user needs to define `group` properly to measure the disparity between two groups in `group` variable, there should be 2 levels for this variable. 
+`plqrss` function provides partial linear quantile smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default.
 
-The user needs to define `id` properly to have the exact identification on observations whether they are measured repeatedly across the time. 
+```R
+plss(y = response, x = design matrix, z = covariate)
 
-The selection of bandwidths is essential and important for the kernel regression. If there is nothing given as initial values, we get and use the default marginal bandwidth from the function `KernSmooth::dpill`. For all models, `bandwidth_M`, `bandwidth_m`, `bandwidth_xM` and `bandwidth_xm` are essential. If `modifier` is not `NULL` and is a continuous variable, then `bandwidth_Z_M`, `bandwidth_Z_m`, `bandwidth_Z_xM` and `bandwidth_Z_xm` are needed more.
+plqrss(y = response, x = design matrix, z = covariate, tau = 0.5)
+```
 
-Also, use needs to specify local time points (`local_time`) for the time-varying kernel regression. The function will automatically give the time points if there is nothing given. The local time points will be returned in the fitted object.
-
-#### - `pb` function
-`pb` function provides the original Peters-Belson method of Peters (1941) and Belson (1956). The usage is as similar as the `vc.pb` but the user should not put the time varying coefficients and a modifier variable.
 
 ### Developing
 
-- The conditional version will be uploaded very soon.
-- The cross-validation function for choosing the bandwidths will be developed.
+- The Rcpp version is being tested now for stability.
+- The cross-validation function for choosing the tuning parameters will be updated soon.
 - We are trying to develop other methods as well.
 
-### References
+%### References
 
-Peters, C. C. (1941) A method of matching groups for experiment with no loss of population. Journal of Educational Research, 34, 606-612.
+%Peters, C. C. (1941) A method of matching groups for experiment with no loss of population. Journal of Educational Research, 34, 606-612.
 
-Belson, W. A. (1956) A Technique for Studying the Effects of a Television 
+%Belson, W. A. (1956) A Technique for Studying the Effects of a Television 
 Broadcast.  JRSSC, 5(3), 195-202.
 
-Lee, S. K., Kim, S., Kim, M.-O., Grantz, K. L., and Hong, H. G. (2024) Decomposition of Longitudinal Disparities: An Application to the Fetal Growth-Singletons Study. *submitted*.
+%Lee, S. K., Kim, S., Kim, M.-O., Grantz, K. L., and Hong, H. G. (2024) Decomposition of Longitudinal Disparities: An Application to the Fetal Growth-Singletons Study. *submitted*.
