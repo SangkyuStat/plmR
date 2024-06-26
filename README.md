@@ -15,7 +15,7 @@ devtools::install_github("SangkyuStat/plmR")
 
 ### Usage Examples
 
-#### (1) `pltf` and `plqrtf` function 
+#### (1) `pltf` and `plqrtf` functions
 `pltf` function provides partial linear trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function. `lambda1` is the tuning parameter for the linear part, and `lambda2` is the tuning parameter for the nonparametric part.
 
 `plqrtf` function provides partial linear quantile trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function. `lambda1` is the tuning parameter for the linear part, and `lambda2` is the tuning parameter for the nonparametric part. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default.
@@ -37,7 +37,7 @@ vc.pb(formula = response ~ variable +
                 group = disparity_group, 
                 modifier = "any modifier")
 ```-->
-#### (2) `plss` and `plqrss` function 
+#### (2) `plss` and `plqrss` functions
 `plss` function provides partial linear smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon. `lambda1` is the tuning parameter for the linear part, and `lambda2` is the tuning parameter for the nonparametric part.
 
 `plqrss` function provides partial linear quantile smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon. `lambda1` is the tuning parameter for the linear part, and `lambda2` is the tuning parameter for the nonparametric part. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default. 
