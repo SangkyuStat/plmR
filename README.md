@@ -16,14 +16,16 @@ devtools::install_github("SangkyuStat/plmR")
 ### Usage Examples
 
 #### (1) `pltf` and `plqrtf` function 
-`pltf` function provides partial linear trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function.
+`pltf` function provides partial linear trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function. `lambda1` is the tuning parameter for the linear part, and `lambda2` is the tuning parameter for the nonparametric part.
 
-`plqrtf` function provides partial linear quantile trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default.
+`plqrtf` function provides partial linear quantile trend filtering. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. `k` is the order for the bounded total variation of the derivative of function. `lambda1` is the tuning parameter for the linear part, and `lambda2` is the tuning parameter for the nonparametric part. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default.
 
 ```R
-pltf(y = response, x = design matrix, z = covariate, k = order)
+pltf(y = response, x = design matrix, z = covariate, k = order,
+     lambda1 = some_value1, lambda2 = some_value2)
 
 plqrtf(y = response, x = design matrix, z = covariate, k = order, tau = 0.5)
+       lambda1 = some_value1, lambda2 = some_value2)
 ```
 
 <!--the user has to indicate whether the variable is time-varying or not. If there is no time-varying variable, then user can perform the function as below:
@@ -36,14 +38,16 @@ vc.pb(formula = response ~ variable +
                 modifier = "any modifier")
 ```-->
 #### (2) `plss` and `plqrss` function 
-`plss` function provides partial linear smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon.
+`plss` function provides partial linear smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon. `lambda1` is the tuning parameter for the linear part, and `lambda2` is the tuning parameter for the nonparametric part.
 
-`plqrss` function provides partial linear quantile smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default.
+`plqrss` function provides partial linear quantile smoothing spline. Its argument incorporates `y`, `x` and `z`, which stand for response variable, covariates for linear term and a covariate for nonparametric term. Note that `z` should be a variable, and `x` can be a matrix. By now, order is fixed as a cubic smoothing spline, but this will be updated soon. `lambda1` is the tuning parameter for the linear part, and `lambda2` is the tuning parameter for the nonparametric part. Additionally, there is one more argument `tau`, which stands for the specific conditional quantile level of interest, if nothing is given, then median is set as a default. 
 
 ```R
-plss(y = response, x = design matrix, z = covariate)
+plss(y = response, x = design matrix, z = covariate,
+     lambda1 = some_value1, lambda2 = some_value2)
 
-plqrss(y = response, x = design matrix, z = covariate, tau = 0.5)
+plqrss(y = response, x = design matrix, z = covariate, tau = 0.5,
+       lambda1 = some_value1, lambda2 = some_value2)
 ```
 
 
